@@ -1,0 +1,275 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <style>
+   .social-vk {
+    margin: 15px;
+   }
+   .social-icons {
+    margin: 20px 0px 20px 0px;
+   }
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Магазин смартфонов Dropshop.kz</title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Custom styles for this template -->
+  <link href="#" rel="stylesheet">
+
+</head>
+<style>
+    body {
+      padding-top: 56px;
+    }
+</style>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <style>
+          .navbar {
+          background-color: #003E93;
+          }
+      </style>
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'base' %}">Dropshop.kz</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">Корзина <span class="badge badge-pill badge-danger">{{ cart.products.count }}</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- Page Content -->
+  <div class="fix-content container">
+
+    <div class="row">
+
+      <div class="col-lg-3 mt-5">
+        <div class="list-group">
+          {% for category in categories %}
+          <a href="{{ category.url }}" class="list-group-item">{{ category.name }} ({{ category.count }})</a>
+          {% endfor %}
+        </div>
+
+      </div>
+      <!-- /.col-lg-3 -->
+
+      <div class="col-lg-9">
+        {% block content %}
+        {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                <strong>{{ message }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+        {% endif %}
+        <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+              <a href="http://127.0.0.1:8000/products/notebook/acer">
+              <img class="d-block img-fluid" src="media/acer-nitro.jpg" alt="First slide">
+              </a>
+            </div>
+            <div class="carousel-item">
+              <a href="http://127.0.0.1:8000/products/smartphone/oneplus8/">
+              <img class="d-block img-fluid" src="media/OnePlus 8-min-2400x600.png" alt="Second slide">
+              </a>
+            </div>
+            <div class="carousel-item">
+              <a href="https://kaspi.kz/guide/cash_credit/#">
+              <img class="d-block img-fluid" src="https://dropshop.kz/image/cache/catalog/%202212/kaspi%20red%20website%20banner-2400x600.jpg" alt="Third slide">
+              </a>
+            </div>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        <div class="fix-content row">
+            <style>
+                .fix-content {
+                padding: 15px 0 15px 0;
+                }
+            </style>
+          {% for product in products %}
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+              <a href="{{ product.get_absolute_url }}"><img class="card-img-top" src="{{ product.image.url }}" alt=""></a>
+              <div class="card-body">
+                <h4 class="card-title">
+                  <a href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                </h4>
+                <h5>{{ product.price }} тг.</h5>
+                <a href="{% url 'add_to_cart' ct_model=product.get_model_name slug=product.slug %}">
+                  <button class="btn btn-danger">Добавить в корзину</button>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <!-- /.row -->
+      {% endblock content %}
+      </div>
+      <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+  </div>
+  <!-- /.container -->
+
+  </div>
+  <!-- Footer -->
+
+<footer class="fix-footer">
+    <style>
+        .fix-footer {
+        background-color: #003E93;
+        }
+    </style>
+           <div class="container">
+             <div class="footer-map d-none d-md-block">
+    <style>
+    .footer-map {
+    width: 1100px;
+    margin: 0 auto 0 auto;
+    }
+    </style>
+               <div class="gis-footer mb-3 pt-3 text-center text-white">
+                   <style>
+                       .gis-footer {
+                       width: 1100px;
+                       margin: 0 auto 0 auto;
+                       background-color: #003E93;
+                       }
+                   </style>
+                   Найдите нас с помощью <img src="https://dropshop.kz/catalog/view/theme/default/img/2gis.png" alt="2gis">
+               </div>
+               <div class="mx-auto">
+                   <a class="dg-widget-link" href="http://2gis.kz/almaty/firm/70000001020816486/center/76.9260334968567,43.241185582852815/zoom/16?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=bigMap">Посмотреть на карте Алматы</a><div class="dg-widget-link"><a href="http://2gis.kz/almaty/firm/70000001020816486/photos/70000001020816486/center/76.9260334968567,43.241185582852815/zoom/17?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=photos">Фотографии компании</a></div><div class="dg-widget-link"><a href="http://2gis.kz/almaty/center/76.926029,43.240607/zoom/16/routeTab/rsType/bus/to/76.926029,43.240607╎DropShop.kz, магазин сотовых телефонов?utm_medium=widget-source&utm_campaign=firmsonmap&utm_source=route">Найти проезд до DropShop.kz, магазин сотовых телефонов</a></div><script charset="utf-8" src="https://widgets.2gis.com/js/DGWidgetLoader.js"></script><script charset="utf-8">new DGWidgetLoader({"width":'100%',"height":400,"borderColor":"#a3a3a3","pos":{"lat":43.241185582852815,"lon":76.9260334968567,"zoom":16},"opt":{"city":"almaty"},"org":[{"id":"70000001020816486"}]});</script><noscript style="color:#c00;font-size:16px;font-weight:bold;">Виджет карты использует JavaScript. Включите его в настройках вашего браузера.</noscript>
+             </div>
+           </div>
+
+             <div class="footer-top">
+                 <style>
+                     .footer-top {
+                     width: 1100px;
+                     margin: 0 auto 0 auto;
+                     background-color: #003E93;
+                     }
+                 </style>
+               <div class="footer-top-immortal d-flex justify-content-between pb-5 align-items-start">
+                 <div class="logo text-center mt-sm-5">
+                   <img src="https://dropshop.kz/catalog/view/theme/default/img/logofooter.png" alt="Логотип">
+                 </div>
+               <div class="contacts">
+		    <div class="mt-5">
+                                <a class="d-flex" href="tel: +7 (727) 346 34 74">
+                    <img src="https://dropshop.kz/catalog/view/theme/default/img/call_white.svg" width="100" height="111" alt="Телефон">
+                    <div class="text-white">
+                        <p>Оформить заказ:</p>
+                        <p>+7 (727) 346 34 74</p>
+                    </div>
+                </a>
+            </div>
+                    <div class="mt-5">
+                    <a class="d-flex" href="tel: +7 (702) 075 01 21">
+                         <img src="https://dropshop.kz/catalog/view/theme/default/img/call_white.svg" width="100" height="111" alt="Телефон">
+                         <div class="text-white">
+                           <p>Оформить заказ:</p>
+                           <p>+7 (702) 075 01 21</p>
+                         </div>
+                    </a>
+                    </div>
+                     <div class="mt-5">
+                         <a class="d-flex" href="https://api.whatsapp.com/send?phone=77081001018">
+                         <img src="https://dropshop.kz/catalog/view/theme/default/img/whatsapp_white.svg" width="100" height="111" alt="Whatsapp">
+                         <div class="text-white">
+                           <p>Служба поддержки клиентов:</p>
+                           <p>+7 (708) 100 10 18</p>
+                         </div>
+                       </a>
+                     </div>
+                 </div>
+                 <div id="contacts" class="contacts">
+                     <div class="mt-5">
+                       <a class="d-flex" href="https://2gis.kz/almaty/firm/70000001020816486?utm_medium=widget&utm_campaign=firmsonmap&utm_source=bigMap&queryState=center%2F76.926033%2C43.242749%2Fzoom%2F16">
+                         <img src="https://dropshop.kz/catalog/view/theme/default/img/location_white.svg" width="100" height="111" alt="Location">
+                         <div class="text-white">
+                           <p></p>
+                                  <p>г. Алматы, ул. Абая, д.44, ТРЦ "Symphony"</p>
+                         </div>
+                       </a>
+                     </div>
+                     <div class="mt-5">
+                       <a class="d-flex">
+                         <img src="https://dropshop.kz/catalog/view/theme/default/img/clock-icon.png" alt="Clock">
+                         <div class="text-white">
+                           <p>
+                                <p>График работы:<br> c 10:00 до 20:00<br> c 12:00 до 20:00 во вторник</p>
+                           </p>
+                           <p></p>
+                         </div>
+                       </a>
+                     </div>
+                 </div>
+               </div>
+             </div>
+           </div>
+		   <div class="footer-bottom py-1 bg-dark">
+		   	<div class="container">
+				<p class="d-block d-md-none m-0" style="font-size: 11px;">Присоединяйтесь к нашим соц.сетям!</p>
+               <div class="row">
+                 <div class="col-lg-6 d-none d-md-block text-left">
+                   <img src="https://dropshop.kz/catalog/view/theme/default/img/visa.png" height="80" alt="Vise">
+                   <img src="https://dropshop.kz/catalog/view/theme/default/img/mastercard.png" height="70" alt="Mastercard">
+                 </div>
+                 <div class="col-lg-6 social-icons text-lg-right">
+                   <a class="social-vk" href="https://vk.com/dropshop_kz" target="_blank"><img src="https://dropshop.kz/catalog/view/theme/default/img/social-vk.png" width="35" height="25" alt="Vk"></a>
+                   <a class="social-vk" href="https://www.facebook.com/dropshop.kz" target="_blank"><img src="https://dropshop.kz/catalog/view/theme/default/img/social-fb.png" width="20" height="38" alt="Facebook"></a>
+                   <a class="social-vk" href="https://www.instagram.com/dropshop.kz/" target="_blank"><img src="https://dropshop.kz/catalog/view/theme/default/img/social-insta.png" width="35" height="37" alt="Instagram"></a>
+                   <a class="social-vk" href="https://t.me/dropshop_kz" target="_blank"><img src="https://dropshop.kz/catalog/view/theme/default/img/social-telegram.png" width="35" height="35" alt="Telegram"></a>
+                 </div>
+               </div>
+			</div>
+		   </div>
+         </footer>
+
+
+  <!-- Bootstrap core JavaScript -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
